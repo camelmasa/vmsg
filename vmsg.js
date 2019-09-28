@@ -394,42 +394,6 @@ export class Form {
     saveBtn.disabled = true;
     saveBtn.addEventListener("click", () => this.close(this.recorder.blob));
     recordRow.appendChild(saveBtn);
-
-    const gainWrapper = document.createElement("div");
-    gainWrapper.className = "vmsg-slider-wrapper vmsg-gain-slider-wrapper";
-    const gainSlider = document.createElement("input");
-    gainSlider.className = "vmsg-slider vmsg-gain-slider";
-    gainSlider.setAttribute("type", "range");
-    gainSlider.min = 0;
-    gainSlider.max = 2;
-    gainSlider.step = 0.2;
-    gainSlider.value = 1;
-    gainSlider.onchange = () => {
-      const gain = +gainSlider.value;
-      this.recorder.gainNode.gain.value = gain;
-    };
-    gainWrapper.appendChild(gainSlider);
-    this.popup.appendChild(gainWrapper);
-
-    const pitchWrapper = document.createElement("div");
-    pitchWrapper.className = "vmsg-slider-wrapper vmsg-pitch-slider-wrapper";
-    const pitchSlider = document.createElement("input");
-    pitchSlider.className = "vmsg-slider vmsg-pitch-slider";
-    pitchSlider.setAttribute("type", "range");
-    pitchSlider.min = -1;
-    pitchSlider.max = 1;
-    pitchSlider.step = 0.2;
-    pitchSlider.value = this.recorder.pitch;
-    pitchSlider.onchange = () => {
-      const pitch = +pitchSlider.value;
-      this.recorder.pitchFX.setPitchOffset(pitch);
-      this.recorder.gainNode.disconnect();
-      this.recorder.gainNode.connect(
-        pitch === 0 ? this.recorder.encNode : this.recorder.pitchFX.input
-      );
-    };
-    pitchWrapper.appendChild(pitchSlider);
-    this.popup.appendChild(pitchWrapper);
   }
 
   drawError(err) {
